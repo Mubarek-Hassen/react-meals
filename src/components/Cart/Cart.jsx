@@ -18,7 +18,6 @@ const Cart = (props) =>{
   const cartItemAddHandler = (item) =>{
     cartCtx.addItem({...item, amount: 1})
   }
-
   const cartItems = <ul className={classes['cart-items']}>
     {cartCtx.items.map((item)=> (
     <CartItem key= {item.id} name={item.name} amount= {item.amount} price={item.price} onRemove={cartItemRemoveHandler.bind(null, item.id)} onAdd={cartItemAddHandler.bind(null, item)}  />
@@ -34,7 +33,10 @@ const Cart = (props) =>{
     </div>
     <div className={classes.actions}>
       <button className={classes['button--alt']} onClick = {props.onHideCart}>Close</button>
-      {hasItems && <button className={classes.button}>Order</button>}
+      {hasItems && <button className={classes.button} onClick={()=>{
+        console.log(`Your order is on it's way.`)
+        setTimeout(()=>{console.log('Your food is here, Enjoy Your Meal! ')},5000)
+      }}>Order</button>}
     </div>
   </Modal>
   )
