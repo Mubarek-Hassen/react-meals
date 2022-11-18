@@ -9,6 +9,7 @@ const AvailableMeals =()=>{
 
   const [meals, setMeals] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [httpError, setHttpError] = useState()
 
   useEffect(()=>{
     const fetchMeals = async ()=>{ 
@@ -16,6 +17,9 @@ const AvailableMeals =()=>{
       const res = await fetch('https://react-http-62223-default-rtdb.firebaseio.com/meals.json');
       const data = await res.json()
       const loadedMeals = []
+      if(!res.ok){
+        throw new Error("Something went wrong!")
+      }
       for (const key in data){
         loadedMeals.push({
           id: key,
@@ -27,14 +31,24 @@ const AvailableMeals =()=>{
       setMeals(loadedMeals)
       setIsLoading(false)
   }
-  fetchMeals()
+
+    fetchMeals().catch( error => {
+      setIsLoading(false)
+      setHttpError(error.message)
+    })
   },[])
 
-
+  
   if(isLoading){
     return ( 
-    <section className={classes.MealsLoading}>
+      <section className={classes.MealsLoading}>
       <h3>Loading...</h3>
+    </section>)
+  }
+  if(httpError){
+    return (
+    <section className={classes.MealsError}>
+      <h3>{httpError}</h3>
     </section>)
   }
 
