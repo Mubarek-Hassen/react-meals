@@ -44,7 +44,7 @@ const Cart = (props) =>{
       <span>Total Amount</span>
       <span>{totalAmount}</span>
     </div>
-    {isCheckout && <Checkout />}
+    {isCheckout && <Checkout onCancel={props.onHideCart} />}
     {!isCheckout && modalActionsJSX}
   </Modal>
   )
