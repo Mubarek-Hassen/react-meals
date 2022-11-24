@@ -27,7 +27,14 @@ const Cart = (props) =>{
   }
 
   const submitOrderHandler =(userData)=>{
+    fetch('https://react-http-62223-default-rtdb.firebaseio.com/orders.json', {
+      method: 'POST',
+      body: JSON.stringify({
+        user: userData,
+        orderedItems: cartCtx.items
+      })
 
+    })
   }
   
   const cartItems = <ul className={classes['cart-items']}>
